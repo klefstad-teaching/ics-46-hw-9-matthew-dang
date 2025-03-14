@@ -6,7 +6,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     previous.assign(n, -1);
     vector<bool> visited(n, false);
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
-    minHeap.push({source, 0});
+    minHeap.push({0, source});
     distances[source] = 0;
     while (!minHeap.empty()) {
         int u = minHeap.top().second;
@@ -50,5 +50,5 @@ void print_path(const vector<int>& path, int total) {
         cout << path[i];
         if (i < path.size() - 1) cout << " ";
     }
-    cout << " \nTotal cost is " << total << endl;
+    cout << "\nTotal cost is " << total << endl;
 }
