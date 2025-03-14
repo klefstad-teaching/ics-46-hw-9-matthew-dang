@@ -26,3 +26,56 @@ bool is_adjacent(const string& word1, const string& word2) {
     return edit_distance_within(word1, word2, 1);
 }
 
+vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
+    if (begin_wood == end_word) {
+        error(begin_wood, end_word, "Start adn end words must be different");
+    }
+
+    queue<vector<string>> ladder_queue;
+    ladder_queue.push({begin_word});
+    set<string> visited;
+    visited.insert(begin_word);
+
+    while(!ladder_queue.empty()) {
+        vector<string> ladder = ladder_queue.front();
+        ladder_queue.pop();
+        string last_word = ladder.back();
+
+        for (const string& word : word_lsit) {
+            if (is_adjacent(last_word, word) && visited.find(word) == visited.end()) {
+                vector<string> new_ladder = ladder;
+                new_ladder.push_back(word);
+                if (word == end_word) return new_ladder;
+
+                visited.insert(word);
+                ladder_queue.push(new_ladder);
+            }
+        }
+    }
+    return {};
+}
+
+void load_words(set<string>& word_list, const string& file_name) {
+    ifstream file(file_name);
+    if (!file) {
+        cerr << "Cant open file" << endl;
+    }
+    string word;
+    while (file >> word) {
+        transform(word.begin(), word.end(), word.begin(), ::tolower);
+        word_list.insert(word);
+    }
+    file.close();
+}
+
+void print_word_ladder(const vector<string>& ladder) {
+    if (ladder.empty()) {
+        cout << "No word ladder found" << endl;
+        return;
+    }
+    for (size_t i = 0; i < ladder.size(); ++i) {
+        if (i > 0) cout << " -> ";
+        cout << ladder [i];
+    }
+    cout << endl;
+}
