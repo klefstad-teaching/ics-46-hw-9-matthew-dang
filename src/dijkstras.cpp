@@ -33,6 +33,8 @@ vector<int> extract_shortest_path(const vector<int> distances, const vector<int>
     vector<int> path;
     stack<int> temp_path;
 
+    if(distances[destination] == INF) return path;
+
     for (int v = destination; v != -1; v = previous[v]) {
         temp_path.push(v);
     }
